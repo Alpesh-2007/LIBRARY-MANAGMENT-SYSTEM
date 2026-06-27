@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Managment System</title>
+
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: darkblue;
+        }
+
+        button {
+            margin-top: 70px;
+            margin-left: 50px;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            color: white;
+
+        }
+
+        .add {
+            background: green;
+        }
+
+        .show {
+            background: blue;
+        }
+
+        .issue {
+            background: rgb(255, 255, 3);
+            color: black;
+        }
+
+        .return {
+            background: purple;
+
+        }
+
+        .delet {
+            background: red;
+        }
+
+        .status {
+            background: orange;
+        }
+
+        .total {
+            background: teal;
+        }
+    </style>
+
+
+</head>
+
+
+<body>
+
+    <h1>-*- Library Managment System -*-</h1>
+
+    <button class="add" onclick="add()">Add Books</button>
+    <button class="show" onclick="display()">Display All Books</button>
+    <button class="issue" onclick="bookIssue()">Issue Books</button>
+    <button class="return" onclick="bookReturn()">Return Books</button>
+    <button class="delet" onclick="deleteBook()">Delete Books </button>
+    <button class="status" onclick="bookStatus()">Book Status</button>
+    <button class="total" onclick="totalBooks()">Total Books</button>
+    <button class="total" onclick="totalBookQua()">Total Books Quantity</button>
+
+
+
+    <script>
+
+
+
+        var books = [];
+
+
+        function add() {
+            var book = {
+                BookID: Number(prompt("Enter Book Id : ")),
+                BookName: prompt("Enter Book Name : "),
+                AuthorName: prompt("Enter Book Author Name : "),
+                Category: prompt("Enter Book Catagory : "),
+                Quantity: Number(prompt("Enter Book Quentity : "))
+            }
+
+            books.push(book);
+            alert("Book Added Successfully!")
+
+            console.log(books);
+        }
+
+
+        function display() {
+
+            console.log(books);
+
+        }
+
+
+        function bookIssue() {
+
+            var bookstatus = prompt("Enter Book Name");
+            var found = false;
+
+            for (let i = 0; i < books.length; i++) {
+
+                if (books[i].BookName === bookstatus) {
+
+
+                    books[i].Quantity--;
+
+
+                    alert("Book Issued Successfully!");
+                    console.log(books);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                alert("Book is not Available");
+            }
+        }
+
+
+        function bookReturn() {
+
+            var name = prompt("Enter the Book Name : ");
+            var bool = false;
+
+            for (let i = 0; i < books.length; i++) {
+
+                if (books[i].BookName === name) {
+
+                    books[i].Quantity++;
+
+                    document.querySelector('div').innerHTML += `
+                <h2>Book ID : ${books[i].BookId}</h2>
+                <h2>Book Name : ${books[i].BookName}</h2>
+                <h2>Book Author Name : ${books[i].AuthorName}</h2>
+                <h2>Book Category : ${books[i].Category}</h2>
+                <h2>Book Quantity : ${books[i].Quantity}</h2>
+            `;
+
+                    alert("Book Returned Successfully!")
+                    console.log(books);
+                    bool = true;
+                    break;
+                }
+            }
+
+            if (!bool) {
+                alert("Book Name was not available");
+            }
+        }
+
+
+        function deleteBook() {
+
+            var name = prompt("Enter Book Name");
+            var found = false;
+
+            for (let i = 0; i < books.length; i++) {
+
+                if (books[i].BookName === name) {
+
+                    books.splice(i, 1);
+
+                    alert("Book Deleted Successfully!");
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found == false) {
+                alert("Book Name Does Not Match");
+            }
+
+            console.log(books);
+        }
+
+
+        function bookStatus() {
+
+            var bookstatus = prompt("Enter Book Name");
+            var found = false;
+
+            for (let i = 0; i < books.length; i++) {
+
+                if (books[i].BookName === bookstatus) {
+
+                    if (books[i].Quantity > 0) {
+                        alert("Book is Available");
+                    } else {
+                        alert("Out of Stock");
+                    }
+
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                alert("Book is not Available");
+            }
+        }
+
+
+        function totalBooks() {
+            alert("Total Books Are : " + books.length);
+
+
+        }
+
+
+        function totalBookQua() {
+
+            let total = 0;
+
+            for (let i = 0; i < books.length; i++) {
+                total += books[i].Quantity;
+            }
+
+            alert("Total Books Quantity Are : " + total);
+        }
+    </script>
+
+
+</body>
+
+
+</html>
